@@ -1,1 +1,39 @@
+Code to reach a location using Google Maps
+----------------------------------------------
 
+
+jupyter nbextension enable --py gmaps # We may need to run this command to restart the jupyter
+with open('apikey.txt') as f:
+    api_key = f.readline()
+    f.close
+import gmaps
+gmaps.configure(api_key='Your api key here')
+lpu = (40.75, -74.00)
+gmaps.figure(center=lpu, zoom_level=12)
+import gmaps
+import gmaps.datasets
+# Use google maps api
+gmaps.configure(api_key=api_key) # Fill in with your API key
+# Get the dataset
+earthquake_df = gmaps.datasets.load_dataset_as_df('earthquakes')
+#Get the locations from the data set
+locations = earthquake_df[['latitude', 'longitude']]
+#Get the magnitude from the data
+weights = earthquake_df['magnitude']
+#Set up your map
+fig = gmaps.figure()
+fig.add_layer(gmaps.heatmap_layer(locations, weights=weights))
+fig
+import gmaps
+#configure api
+gmaps.configure(api_key=api_key)
+#Define location 1 and 2
+Durango = (37.2753,-107.880067)
+SF = (37.7749,-122.419416)
+#Create the map
+fig = gmaps.figure()
+#create the layer
+layer = gmaps.directions.Directions(Durango, SF,mode='car')
+#Add the layer
+fig.add_layer(layer)
+fig
